@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Admin panel</title>
+  </head>
+  <body>
+    <h1>Admin panel</h1>
+    <a th:href="@{/}">Homepage</a>
+    <h2>Books</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Year</th>
+          <th>Keywords</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="book : ${books}">
+          <td th:text="${book.title}"></td>
+          <td th:text="${book.author}"></td>
+          <td th:text="${book.year}"></td>
+          <td>
+            <span th:each="keyword : ${book.keywords}" th:text="${keyword} + ' '"></span>
+          </td>
+          <td>
+            <a th:href="@{'/admin/changeBook'(id=${book.id})}" type="submit">Change book</a>
+            <form method="post" th:action="@{'/admin/deleteBook/' + ${book.id}}">
+              <button type="submit">Delete book</button>
+            </form>
+          </td>
+        </tr>
+        <tr th:if="${books.size() == 0}">
+          <td colspan="5">No books found</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <form method="post" th:object="${bookToAdd}" th:action="@{/admin/addBook}">
+      <label>
+        <input type="text" th:field="*{title}" placeholder="Title" />
+      </label>
+      <label>
+        <input type="text" th:field="*{author}" placeholder="Author" />
+      </label>
+      <label>
+        <input type="number" th:field="*{year}" placeholder="Year" />
+      </label>
+      <label>
+        <input type="text" th:field="*{keywords}" placeholder="Keywords" />
+      </label>
+      <button type="submit">Add Book</button>
+    </form>
+  </body>
+</html>
