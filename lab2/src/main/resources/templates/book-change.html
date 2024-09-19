@@ -1,32 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  <head>
+<head>
     <title>Change book</title>
-  </head>
-  <body>
-    <h1>Change book</h1>
-    <a th:href="@{/admin}">Admin panel</a>
-    <h2>Book</h2>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+</head>
+<body class="container my-5">
+    <h1 class="text-center mb-4">Change Book</h1>
+
+    <a th:href="@{/admin}" class="btn btn-secondary mb-4">Admin Panel</a>
+
+    <h2>Book Details</h2>
 
     <form method="post" th:object="${bookToChange}"
-          th:action="@{/admin/changeBook/{id}(id=${param.id})}">
-      <label>
-        Title:
-        <input type="text" th:field="*{title}" placeholder="Title"/>
-      </label>
-      <label>
-        Author:
-        <input type="text" th:field="*{author}" placeholder="Author"/>
-      </label>
-      <label>
-        Year:
-        <input type="number" th:field="*{year}" placeholder="Year"/>
-      </label>
-      <label>
-        Keywords:
-        <input type="text" th:field="*{keywords}" placeholder="Keywords"/>
-      </label>
-      <button type="submit">Change Book</button>
+          th:action="@{/admin/changeBook/{id}(id=${param.id})}" class="mt-4">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    th:field="*{title}"
+                    placeholder="Title"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="author"
+                    th:field="*{author}"
+                    placeholder="Author"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="year">Year:</label>
+            <input
+                    type="number"
+                    class="form-control"
+                    id="year"
+                    th:field="*{year}"
+                    placeholder="Year"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="keywords">Keywords:</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="keywords"
+                    th:field="*{keywords}"
+                    placeholder="Keywords"
+            />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Change Book</button>
     </form>
-  </body>
+</body>
 </html>

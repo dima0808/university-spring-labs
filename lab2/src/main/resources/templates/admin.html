@@ -1,60 +1,94 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  <head>
+<head>
     <title>Admin panel</title>
-  </head>
-  <body>
-    <h1>Admin panel</h1>
-    <a th:href="@{/}">Homepage</a>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+</head>
+<body class="container my-5">
+    <h1 class="text-center mb-4">Admin Panel</h1>
+    <a th:href="@{/}" class="btn btn-secondary mb-4">Homepage</a>
+
     <h2>Books</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Year</th>
-          <th>Keywords</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="book : ${books}">
-          <td th:text="${book.title}"></td>
-          <td th:text="${book.author}"></td>
-          <td th:text="${book.year}"></td>
-          <td>
-            <span th:each="keyword : ${book.keywords}" th:text="${keyword} + ' '"></span>
-          </td>
-          <td>
-            <a th:href="@{'/admin/changeBook'(id=${book.id})}" type="submit">Change book</a>
-            <form method="post" th:action="@{'/admin/deleteBook/' + ${book.id}}">
-              <button type="submit">Delete book</button>
-            </form>
-          </td>
-        </tr>
-        <tr th:if="${books.size() == 0}">
-          <td colspan="5">No books found</td>
-        </tr>
-      </tbody>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Year</th>
+              <th>Keywords</th>
+              <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.year}"></td>
+                <td>
+                    <span th:each="keyword : ${book.keywords}" th:text="${keyword} + ' '"></span>
+                </td>
+                <td>
+                    <a
+                            th:href="@{'/admin/changeBook'(id=${book.id})}"
+                            class="btn btn-warning btn-sm mb-1"
+                            type="button"
+                    >
+                      Change book
+                    </a>
+                    <form method="post" th:action="@{'/admin/deleteBook/' + ${book.id}}" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete book</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${books.size() == 0}">
+                <td colspan="5" class="text-center">No books found</td>
+            </tr>
+        </tbody>
     </table>
 
-    <hr>
+    <hr />
 
-    <form method="post" th:object="${bookToAdd}" th:action="@{/admin/addBook}">
-      <label>
-        <input type="text" th:field="*{title}" placeholder="Title" />
-      </label>
-      <label>
-        <input type="text" th:field="*{author}" placeholder="Author" />
-      </label>
-      <label>
-        <input type="number" th:field="*{year}" placeholder="Year" />
-      </label>
-      <label>
-        <input type="text" th:field="*{keywords}" placeholder="Keywords" />
-      </label>
-      <button type="submit">Add Book</button>
+    <h2>Add a new book</h2>
+    <form method="post" th:object="${bookToAdd}" th:action="@{/admin/addBook}" class="mt-4">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        th:field="*{title}"
+                        placeholder="Title"
+                />
+            </div>
+            <div class="form-group col-md-3">
+                <input
+                        type="text"
+                        class="form-control"
+                        th:field="*{author}"
+                        placeholder="Author"
+                />
+            </div>
+            <div class="form-group col-md-2">
+                <input
+                        type="number"
+                        class="form-control"
+                        th:field="*{year}"
+                        placeholder="Year"
+                />
+            </div>
+            <div class="form-group col-md-4">
+                <input
+                        type="text"
+                        class="form-control"
+                        th:field="*{keywords}"
+                        placeholder="Keywords"
+                />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Add Book</button>
     </form>
-  </body>
+</body>
 </html>
